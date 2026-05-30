@@ -149,3 +149,96 @@ hello_fuse /tmp/mnt &
 cat /tmp/mnt/hello
 # Output: Hello from FUSE!
 ```
+
+## Soal 2 - Season
+
+### Penjelasan
+
+Membuat sistem operasi sederhana berbasis 16-bit menggunakan bootloader dan kernel yang ditulis dalam Assembly dan C. OS ini berjalan di emulator Bochs dan memiliki shell interaktif dengan berbagai command.
+
+---
+
+### kernel.asm
+
+Berisi implementasi fungsi-fungsi low-level yang dipanggil oleh kernel.c.
+
+**`_putInMemory`** — Menulis karakter langsung ke video memory (0xB800) untuk ditampilkan di layar.
+
+**`_getChar`** — Membaca input karakter dari keyboard menggunakan BIOS interrupt 0x16.
+
+```nasm
+_getChar:
+    push bp
+    mov bp, sp
+    mov ah, 0x00
+    int 0x16
+    mov ah, 0
+    pop bp
+    ret
+```
+
+---
+
+### kernel.c
+
+Berisi implementasi shell interaktif dan semua command yang tersedia.
+
+**Fungsi-fungsi utama:**
+
+- `printChar()` — Menulis satu karakter ke video memory dengan warna yang sesuai
+- `printString()` — Menulis string ke layar karakter per karakter
+- `clearScreen()` — Membersihkan seluruh layar dan reset cursor
+- `readString()` — Membaca input dari keyboard sampai Enter ditekan, support backspace
+- `strcmp()` — Membandingkan dua string
+- `startsWith()` — Mengecek apakah string diawali dengan prefix tertentu
+- `atoi()` — Mengkonversi string ke integer
+- `intToString()` — Mengkonversi integer ke string (tanpa modulo karena restriction 16-bit)
+- `factorial()` — Menghitung faktorial dengan deteksi overflow 16-bit
+
+---
+
+### Command yang tersedia
+
+| Command | Fungsi | Contoh |
+|---------|--------|--------|
+| `check` | Memastikan sistem berjalan baik | `check` → `ok` |
+| `add <a> <b>` | Penjumlahan dua bilangan | `add 5 3` → `8` |
+| `sub <a> <b>` | Pengurangan dua bilangan | `sub 10 2` → `8` |
+| `fac <n>` | Faktorial bilangan (limit 16-bit) | `fac 6` → `720` |
+| `season <name>` | Ganti warna teks | `season winter` |
+| `triangle <n>` | Mencetak segitiga dari karakter x | `triangle 5` |
+| `clear` | Menghapus seluruh histori layar | `clear` |
+| `help` | Menampilkan daftar command | `help` |
+
+---
+
+### Season (Warna)
+
+| Season | Warna |
+|--------|-------|
+| winter | Biru (0x09) |
+| spring | Hijau (0x0A) |
+| summer | Kuning (0x0E) |
+| fall | Orange (0x06) |
+| radiant | Magenta (0x0D) |
+
+---
+
+### Catatan
+
+- Sistem berjalan pada arsitektur 16-bit, sehingga ada batasan integer maksimal 32767
+- Jika faktorial melebihi batas 16-bit, sistem mencetak: `know your limit little bro.`
+- Tidak menggunakan stdlib, division (/) untuk modulo, dan menggunakan teknik alternatif untuk operasi aritmatika
+- Build menggunakan Docker dengan tools `bcc`, `nasm`, dan `ld86`
+
+---
+
+### Cara Build dan Run
+
+```bash
+# Build
+bash build.sh
+
+# Run
+bochs -f bochsrc.txt
+```
