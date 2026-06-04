@@ -266,6 +266,7 @@ Output:
 ```
 bochs -f bochsrc.txt
 ```
+```
 check
 add 5 3
 sub 10 2
@@ -273,6 +274,6 @@ fac 6
 season winter
 triangle 5
 ```
-<img width="730" height="546" alt="Screenshot 2026-06-04 at 18 26 19" src="https://github.com/user-attachments/assets/094cf1a5-e986-4e87-ad25-c95b91efeba3" />
+<img width="728" height="483" alt="Screenshot 2026-06-04 at 18 27 16" src="https://github.com/user-attachments/assets/79ccf936-0196-45e2-b747-633dc2c5291d" />
 
 help
