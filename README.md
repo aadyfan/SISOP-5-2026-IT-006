@@ -147,6 +147,27 @@ hello_fuse /tmp/mnt &
 cat /tmp/mnt/hello
 # Output: Hello from FUSE!
 ```
+Output: 
+```
+ping -c 3 8.8.8.8
+wget example.com
+```
+<img width="1130" height="381" alt="Screenshot 2026-06-04 at 18 06 48" src="https://github.com/user-attachments/assets/106abb59-a2d1-487d-8305-8a054cafadb5" />
+```
+party install wget
+party list
+party remove wget
+```
+<img width="651" height="244" alt="Screenshot 2026-06-04 at 18 07 41" src="https://github.com/user-attachments/assets/d3080a7e-d4cd-4ff3-bddb-799612b1eee8" />
+
+```
+mkdir -p /tmp/mnt
+hello_fuse /tmp/mnt &
+sleep 1
+cat /tmp/mnt/hello
+```
+<img width="474" height="204" alt="Screenshot 2026-06-04 at 18 10 49" src="https://github.com/user-attachments/assets/9696c7a5-197f-486d-bb23-7acdaa464308" />
+
 
 ## Soal 2 - Season
 
@@ -240,3 +261,18 @@ bash build.sh
 # Run
 bochs -f bochsrc.txt
 ```
+Output:
+
+```
+bochs -f bochsrc.txt
+```
+check
+add 5 3
+sub 10 2
+fac 6
+season winter
+triangle 5
+```
+<img width="730" height="546" alt="Screenshot 2026-06-04 at 18 26 19" src="https://github.com/user-attachments/assets/094cf1a5-e986-4e87-ad25-c95b91efeba3" />
+
+help
